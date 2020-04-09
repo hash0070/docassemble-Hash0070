@@ -1,0 +1,90 @@
+---
+variable name: NHperson_info
+use objects: True
+data:
+  - Name: Ladan Haghighat
+    Age: 50
+    Relationship: Mother
+    Likes Dogs: True
+  - Name: Janet Brannen
+    Age: 38
+    Relationship: Aunty
+    Likes Dogs: True
+  - Name: Kenneth Brannen
+    Age: 73
+    Relationship: Uncle
+    Likes Dogs: True
+  - Name: Boshraeieah Kasiri Arabi
+    Age: 80
+    Relationship: Grandmother
+    Likes Dogs: True
+---
+mandatory: True
+question:  Data Table
+subquestion: |
+  #### This a table displaying my family dictionary!
+  
+  ${ NHcolumn_header }
+  ${ NHdashes }
+  %for NHitem in NHtable_rows:
+  ${ NHitem }
+  %endfor
+buttons:
+  Exit: exit
+  Continue: continue
+---
+mandatory: True
+question: Introduction to checkboxes
+subquestion: |
+  #### Here is the result of your checkbox selection
+  
+  ${ NHquestion_table }
+  
+attachment:
+  docx template file: My_Advanced_Jinja.docx
+  valid formats:
+    - pdf
+buttons:
+  - Exit: exit
+  - Restart: restart
+---
+code: |
+  NHcolumn_header = ""
+  
+  for NHitem in NHperson_info[0]:
+    NHcolumn_header += NHitem + '|'
+  
+  NHcolumn_header = NHcolumn_header[:-1]
+---
+code: |
+  NHdashes = "---"
+  for i in range(len(NHperson_info[0]) - 1):
+    NHdashes += "|---"
+---
+code: | 
+  NHtable_rows = []
+  
+  for NHitem in NHperson_info:
+      MDrow = ""
+      for NHkey in NHitem:
+        MDrow += str(NHitem[NHkey]) + '|'
+      MDrow = MDrow[:-1]
+      NHtable_rows.append(MDrow)
+---
+table: NHquestion_table
+rows:  NHperson_info
+columns:
+  - Question: |
+      row_item['NHperson_info']
+  - Selected answers: |
+      row_item['NHanswers'].true_values()
+  - No. Selected answers: |
+      len(row_item['NHanswers'].true_values())
+---
+question: |
+  Is the information correct for ${ Name[i]['Name'] } ?
+fields:
+  - no label: NHperson_info[i]['NHanswers']
+    datatype: checkboxes
+    code: NHperson_info[i]['NHchoices']
+---

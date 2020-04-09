@@ -1,0 +1,22 @@
+mandatory: True
+question: Personal Information
+subquestion: |
+  
+  Category|Value
+  ---|---
+  %for NHkey in NHperson_info:
+  ${ NHkey } | ${NHperson_info[NHkey]}
+  %endfor
+buttons:
+  - Continue: continue
+  - Exit: exit
+---
+code: |
+  NHperson_info = {
+    'First name':'Nakisa',
+    'Last name':'Hashemi',
+    'Age': 20,
+    'Hobbies':'Eating, Singing, Netflix',
+    'Likes pets': True
+  }
+---

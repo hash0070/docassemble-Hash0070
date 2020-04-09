@@ -1,0 +1,57 @@
+---
+variable name: NHperson_info
+use objects: True
+data:
+  - Name: Ladan Haghighat
+    Age: 50
+    Relationship: Mother
+    Likes Dogs: True
+  - Name: Janet Brannen
+    Age: 38
+    Relationship: Aunty
+    Likes Dogs: True
+  - Name: Kenneth Brannen
+    Age: 73
+    Relationship: Uncle
+    Likes Dogs: True
+  - Name: Boshraeieah Kasiri Arabi
+    Age: 80
+    Relationship: Grandmother
+    Likes Dogs: True
+---
+mandatory: True
+question:  Data Table
+subquestion: |
+  #### This a table displaying my family dictionary!
+  
+  ${ NHcolumn_header }
+  ${ NHdashes }
+  %for NHitem in NHtable_rows:
+  ${ NHitem }
+  %endfor
+buttons:
+  Exit: exit
+---
+code: |
+  NHcolumn_header = ""
+  
+  for NHitem in NHperson_info[0]:
+    NHcolumn_header += NHitem + '|'
+  
+  NHcolumn_header = NHcolumn_header[:-1]
+---
+code: |
+  NHdashes = "---"
+  for i in range(len(NHperson_info[0]) - 1):
+    NHdashes += "|---"
+---
+code: | 
+  NHtable_rows = []
+  
+  for NHitem in NHperson_info:
+      MDrow = ""
+      for NHkey in NHitem:
+        MDrow += str(NHitem[NHkey]) + '|'
+      MDrow = MDrow[:-1]
+      NHtable_rows.append(MDrow)
+---

@@ -1,0 +1,25 @@
+---
+variable name: NHname
+use objects: True
+data:
+  - Ladan Haghighat
+  - Janet Brannen
+  - Kenneth Brannen
+  - Boshraeieah Kasiri Arabi
+---
+# Displaying with iteration
+mandatory: True
+question: My Family
+subquestion: |
+  
+  These are all my family members:
+  
+  % for NHitem in NHname:
+  - ${ NHitem }
+  % endfor
+  
+  I have **${ NHname.number_as_word() }** family members.
+  
+buttons:
+  - Continue: continue
+---
